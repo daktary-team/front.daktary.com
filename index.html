@@ -6,16 +6,10 @@
 <meta http-equiv=X-UA-Compatible content=ie=edge>
 <title>Utilisation de l'API Daktary</title>
 
+<script type=text/javascript src=index.js></script>
+
 <article data-gh=pointbar/funkyrh/blob/master/README.md></article>
 
-<script>
-const url = document.querySelector('article').getAttribute('data-gh')
-
-fetch(`http://api.daktary.com/${url}`)
-.then(response => response.json())
-.then(json => {
-  document.querySelector('body').innerHTML = json.body
-})
-</script>
+<ul data-gh=walkingdev/darktable/tree/master/v-34></ul>
 
 </html>
