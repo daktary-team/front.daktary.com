@@ -1,5 +1,5 @@
 /**
- * Inject Github document in html 
+ * Inject Github document in html
  *
  * @param {String} apiUrl Github blob api url.
  * @param {Object} targetNode Target html node.

@@ -27,6 +27,14 @@ CONTRIBUTIONS
   background: url(../img/ico-github.svg) 0 0 no-repeat;
   background-size: 16px;
 }
+.page-top {
+  position: absolute;
+  bottom: 50px;
+  width: 32px;
+  height: 32px;
+  background: url(../img/ico-top.svg) 0 no-repeat;
+  background-size: 32px;
+}
 /* Tooltip Styles
 */
 .tooltip {
