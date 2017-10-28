@@ -5,6 +5,14 @@
   <meta http-equiv=X-UA-Compatible content="ie=edge">
   <title>Lecteur de ressources Github</title>
   <script type=text/javascript src=index.js></script>
-  
-  <section data-gh=pointbar/funkyrh/blob/master/README.md></section>
+
+  <section id=ghContainer data-gh=""></section>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const ghUrlFromLocation = document.location.hash.match(/#(.*)/)[1]
+      const htmlContainer = document.querySelector('section#ghContainer')
+      htmlContainer.setAttribute('data-gh', ghUrlFromLocation)
+      injectBlobInHtml(htmlContainer.getAttribute('data-gh'), htmlContainer)
+    })
+  </script>
 </html>

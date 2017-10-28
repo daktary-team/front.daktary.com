@@ -1,9 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const ghUrlFromHtml = document.querySelector('[data-gh]').getAttribute('data-gh')
-  const htmlContainer = document.querySelector('[data-gh]')
-  injectBlobInHtml(ghUrlFromHtml, htmlContainer)
-})
-
 /**
  * Inject Github document in html 
  *
