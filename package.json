@@ -1,0 +1,28 @@
+{
+  "name": "front.daktary.com",
+  "version": "0.0.1",
+  "description": "Github markdown reader",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/standard",
+    "test": "./node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daktary-team/front.daktary.com.git"
+  },
+  "author": "Stéphane Langlois - scopyleft - @langlois_s",
+  "license": "SEE LICENSE IN CC0 1.0",
+  "bugs": {
+    "url": "https://github.com/daktary-team/front.daktary.com/issues"
+  },
+  "homepage": "https://github.com/daktary-team/front.daktary.com#readme",
+  "devDependencies": {
+    "mocha": "^4.0.1",
+    "standard": "^10.0.3",
+    "chai": "^4.1.2"
+  }
+}
