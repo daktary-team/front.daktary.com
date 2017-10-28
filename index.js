@@ -1,24 +1,30 @@
-document.addEventListener('DOMContentLoaded', () =>
-{
-  const url = document.querySelector('ul').getAttribute('data-gh')
-
-  fetch(`http://api.daktary.com/${url}`)
-    .then(response => response.json())
-    .then(json => {
-      json.body.map(file => {
-        document.querySelector('ul').innerHTML +=
-        `<li> <a href=${file.html_url}>${file.name}</a></li>`
-      })
-  })
-
+document.addEventListener('DOMContentLoaded', () => {
+  const ghUrlFromHtml = document.querySelector('[data-gh]').getAttribute('data-gh')
+  const htmlContainer = document.querySelector('[data-gh]')
+  injectBlobInHtml(ghUrlFromHtml, htmlContainer)
 })
 
-// const url = document.querySelector('article').getAttribute('data-gh')
-
-const displayRessource = (url) => {
-  fetch(`http://api.daktary.com/${url}`)
-    .then(response => response.json())
-    .then(json => {
-      document.querySelector('body').innerHTML = json.body
-  })
+/**
+ * Inject Github document in html 
+ *
+ * @param {String} apiUrl Github blob api url.
+ * @param {Object} targetNode Target html node.
+ * @return {Promise} json Json file with html and metas.
+ */
+const injectBlobInHtml = (apiUrl, targetNode) => {
+  getBlobFromGh(apiUrl)
+    .then(json => { targetNode.innerHTML = json.body })
 }
+
+/**
+ * Load document from Github
+ *
+ * @param {String} apiUrl Github blob api url.
+ * @return {Promise} json Json file with html and metas.
+ */
+const getBlobFromGh = apiUrl =>
+  new Promise(resolve =>
+    window.fetch(`http://api.daktary.com/${apiUrl}`)
+      .then(response => response.json())
+      .then(json => resolve(json))
+  )
