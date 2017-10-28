@@ -1,50 +1,31 @@
 /*
-  Blob
+CONTRIBUTIONS
 */
-.blob-tools {
+.ghBlobTools {
   position: fixed;
   height: 100vh;
   width: 32px;
   padding-top: 45px;
   margin-left: -50px;
 }
-.blob-tools a {
+.ghBlobTools a {
   display: block;
   text-indent: -9999px;
   opacity: .3;
   transition: opacity 0.3s;
 }
-.blob-tools a:hover {
+.ghBlobTools a:hover {
   opacity: .8;
 }
-.github-link,
-.edit-link,
-.help-link {
+.ghBlobLink {
   width: 20px;
   height: 20px;
   margin: 0 auto;
 }
-.github-link {
+.ghBlobLink {
   margin-bottom: 5px;
   background: url(../img/ico-github.svg) 0 0 no-repeat;
   background-size: 16px;
-}
-.edit-link {
-  margin-bottom: 5px;
-  background: url(../img/ico-pencil.svg) 0 0 no-repeat;
-  background-size: 16px;
-}
-.help-link {
-  background: url(../img/ico-question.svg) 0 0 no-repeat;
-  background-size: 16px;
-}
-.page-top {
-  position: absolute;
-  bottom: 50px;
-  width: 32px;
-  height: 32px;
-  background: url(../img/ico-top.svg) 0 no-repeat;
-  background-size: 32px;
 }
 /* Tooltip Styles
 */
@@ -72,13 +53,11 @@
   transform: translateX(-50%) translateY(-10%);
   opacity: 1;
 }
-
 #parentRepo {
   padding-top: 10px;
   text-align: center;
 }
-
-#blob {
+#ghBlobContent {
   font-family: Georgia, 'Times New Roman', Times, serif;
   content: "medium";
   box-sizing: border-box;
@@ -87,72 +66,72 @@
   letter-spacing: 0.01rem;
   color: rgba(0,0,0,0.7);
 }
-#blob h1 {
+#ghBlobContent h1 {
   font-size: 2.25rem;
   line-height: 2.5rem;
   margin-top: 0;
   margin-bottom: 1.75rem;
 }
-#blob h2 {
+#ghBlobContent h2 {
   font-size: 1.9375rem;
   line-height: 1.75rem;
   margin-top: 3.5rem;
   margin-bottom: 1.75rem;
 }
-#blob h3 {
+#ghBlobContent h3 {
   font-size: 1.1875rem;
   line-height: 1.75rem;
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
 }
-#blob h4 {
+#ghBlobContent h4 {
   font-size: 1.1875rem;
   line-height: 1.75rem;
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
 }
-#blob p,
-#blob ul,
-#blob ol,
-#blob table{
+#ghBlobContent p,
+#ghBlobContent ul,
+#ghBlobContent ol,
+#ghBlobContent table{
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   font-size: 1.188rem;
   line-height: 1.5;
 }
-#blob ul {
+#ghBlobContent ul {
   margin-left: 20px;
 }
-#blob ul ul {
+#ghBlobContent ul ul {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   margin-left: 36px;
 }
-#blob li {
+#ghBlobContent li {
   position: relative;
   margin-bottom: 5px;
   padding-left: 20px;
   list-style-type: none;
 }
-#blob li:before {
+#ghBlobContent li:before {
   content: '>';
   position: absolute;
   left: 0;
   top: 0;
   font-weight: bold;
 }
-#blob ol {
+#ghBlobContent ol {
   padding-left: 0;
   counter-reset: section;
   list-style-type: none;
   margin-left: 20px;
 }
-#blob ol li:before {
+#ghBlobContent ol li:before {
   position: relative;
   counter-increment: section;
   content: counters(section, ".") " ";
 }
-#blob img {
+#ghBlobContent img {
   display: block;
   vertical-align: middle;
   padding: 4px;
@@ -162,46 +141,36 @@
   border-radius: 4px;
   transition: all .2s ease-in-out;
 }
-#blob a {
+#ghBlobContent a {
   color: #4d4d4d;
   text-decoration: none;
   border-bottom: 1px solid #4d4d4d;
   transition: all 0.3s
 }
-#blob a:hover,
-#blob a:focus {
+#ghBlobContent a:hover,
+#ghBlobContent a:focus {
   color: #29abe2;
   border-bottom-color: #29abe2;
 }
-
-#blob pre,
-#blob blockquote {
+#ghBlobContent pre,
+#ghBlobContent blockquote {
   margin: 0 2em;
   background-color: #fff;
 }
-#blob pre {
+#ghBlobContent pre {
   margin: 2em;
   padding: 1em;
   white-space: pre-wrap;
 }
-
-#blob blockquote {
+#ghBlobContent blockquote {
   padding: 0.5em 1em;
   letter-spacing: .01rem;
   font-weight: 400;
   font-style: italic;
   border-left: 5px solid #29abe2;
 }
-#blob blockquote p {
+#ghBlobContent blockquote p {
   margin: 0;
-}
-
-/*
-GITHUB MARKDOWN RE-DESIGN
-*/
-#blob table[data-table-type="yaml-metadata"],
-#blob svg.octicon {
-  display: none;
 }
 
 /*
@@ -230,25 +199,24 @@ TAGS
   margin-bottom: 8px;
 }
 
-
 @media (max-width:768px) {
-  #blob {
+  #ghBlobContent {
     text-align: left;
   }
-  .blob-tools {
+  .contribution-tools {
     display: none;
   }
-  #blob blockquote {
+  #ghBlobContent blockquote {
     margin: 0;
   }
   #parentRepo a {
     display: block;
   }
-  #blob ul,
-  #blob ol {
+  #ghBlobContent ul,
+  #ghBlobContent ol {
     margin-left: 0;
   }
-  #blob pre {
+  #ghBlobContent pre {
     padding: 0.5em;
     margin-left: 0;
     margin-right: 0;
