@@ -4,13 +4,18 @@
   <meta name=viewport content="width=device-width", initial-scale=1.0>
   <meta http-equiv=X-UA-Compatible content="ie=edge">
   <title>Lecteur de ressources Github</title>
+  <link rel=stylesheet href=css/reset.css>
+  <link rel=stylesheet href=css/daktary.css>
+  <link rel=stylesheet href=css/blob.css>
   <script type=text/javascript src=index.js></script>
 
-  <section id=ghContainer data-gh=""></section>
+  <main class=container>
+    <section id=blob data-gh=""></section>
+  </main>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const ghUrlFromLocation = document.location.hash.match(/#(.*)/)[1]
-      const htmlContainer = document.querySelector('section#ghContainer')
+      const htmlContainer = document.querySelector('#blob')
       htmlContainer.setAttribute('data-gh', ghUrlFromLocation)
       injectBlobInHtml(htmlContainer.getAttribute('data-gh'), htmlContainer)
     })
