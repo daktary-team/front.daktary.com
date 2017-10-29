@@ -8,8 +8,6 @@
   <link rel=stylesheet href=./css/daktary.css>
   <link rel=stylesheet href=./css/blob.css>
 
-  <script type=text/javascript src=index.js></script>
-
   <a name=top></a>
   <main class=container id=ghBlob>
     <aside class=ghBlobTools>
@@ -18,24 +16,22 @@
     </aside>
     <article id=ghBlobContent></article>
   </main>
-  <script>
-    const getHtmlBlobContent = () => document.querySelector('#ghBlob').querySelector('#ghBlobContent')
-    const getHtmlBlobGhLink = () => document.querySelector('#ghBlob').querySelector('a#ghBlobUrl')
-    const getHash = () => document.location.hash.match(/#(.*)/)[1]
-    const getAnchor = hash => document.querySelector(`a[name="${hash}"]`)
 
+  <script type=text/javascript src=./src/daktary.js></script>
+  <script type=text/javascript src=./src/dom.js></script>
+  <script>
     window.addEventListener('DOMContentLoaded', () => {
-      getHtmlBlobGhLink().setAttribute('href', `https://github.com/${getHash()}`)
-      injectBlobInHtml(getHash(), getHtmlBlobContent())
+      dom.setHrefForBlobGhLink()
+      dom.injectBlobInHtml(daktary.getBlobFromGh(dom.getHash()))
     })
     window.addEventListener('hashchange', evt => {
-      const anchor = getAnchor(getHash()) 
+      const anchor = dom.getAnchorOfHash() 
       if (!! anchor) {
         anchor.scrollIntoView()
         window.location = evt.oldURL
       } else {
-        getHtmlBlobGhLink().setAttribute('href', `https://github.com/${getHash()}`)
-        injectBlobInHtml(getHash(), getHtmlBlobContent())
+        dom.setHrefForBlobGhLink()
+        dom.injectBlobInHtml(daktary.getBlobFromGh(dom.getHash()))
       }
     })
   </script>
