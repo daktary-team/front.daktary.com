@@ -4,6 +4,10 @@ Un outil pour afficher facilement des ressources présentent sur GitHub.
 
 ## À faire
 
+- add meta vide
+- add path in api.
+- add folder examples in tree for api test
+- write README
 - Breadcrumb
 - Voir avec WordPress
 - Voir pour des partials
