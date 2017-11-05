@@ -1,3 +1,5 @@
+/* global route */
+
 /**
  * Functions dedicate to DOM interaction
  *
@@ -6,59 +8,97 @@
 const dom = {}
 
 /**
- * Public functions
- */
-
-/**
-* get hash from url
-*
-* @return {String} hash hash without #.
-*/
-dom.getHash = () => document.location.hash.match(/#(.*)/)[1]
-
-/**
 * get anchor in html
 *
 * @return {Object} node anchor.
 */
-dom.getAnchorOfHash = () => document.querySelector(`a[name="${dom.getHash()}"]`)
-
-/**
-* set github link in html
-*
-*/
-dom.setHrefForBlobGhLink = () =>
-  dom._getHtmlBlobGhLink().setAttribute('href', `https://github.com/${dom.getHash()}`)
+dom.getAnchor = hash => document.querySelector(`a[name="${hash}"]`)
 
 /**
 * Inject Github document in html
 *
 */
-dom.injectBlobInHtml = (blobPromise) =>
+dom.injectInHtml = blobPromise => {
   blobPromise
-    .then(json => { dom._getHtmlBlobContent().innerHTML = json.body })
+    .then(page => {
+      console.log('page.type', page.type)
+      switch (page.type) {
+        case 'file':
+          dom._injectBlobInHtml(page)
+          break
+        case 'tree':
+          dom._injectTreeInHtml(page)
+          break
+      }
+    })
+}
 
 /**
  * Private functions
  */
 
 /**
-* Get the node of blob tag target
+* Inject Github document in html
 *
-* @return {Object} node tag of blob.
+* @param {Object} page a json document from daktary API.
 */
-dom._getHtmlBlob = () => document.querySelector('#ghBlob')
+dom._injectBlobInHtml = page => {
+  const tpl = document.querySelector('template#tplBlob').content
+  tpl.querySelector('.blobGhLink').setAttribute('href', `https://github.com/${dom._ghPath()}`)
+  tpl.querySelector('.blobContent').innerHTML = page.body
+  dom._injectTpl(tpl)
+}
 
 /**
-* Get the node of blob content tag target
+* Inject Github tree in html
 *
-* @return {Object} node content tag of blob.
+* @param {Object} page a json tree from daktary API.
 */
-dom._getHtmlBlobContent = () => dom._getHtmlBlob().querySelector('#ghBlobContent')
+dom._injectTreeInHtml = page => {
+  const tpl = document.querySelector('template#tplTree').content
+  const articleFile = tpl.querySelector('.gh-type-file')
+  const articleFolder = tpl.querySelector('.gh-type-folder')
+  const section = tpl.querySelector('section.gh-list')
+  // section.appendChild(articleFile)
+  // section.appendChild(articleFolder)
+
+  page.body.forEach(item => {
+    console.log('item', item)
+    if (item.type === 'dir') {
+      let folder = articleFolder.cloneNode(true)
+      folder.querySelector('h2 a.folderLink').innerText = item.name
+      folder.querySelector('h2 a.folderLink').href = item.html_url
+      folder.querySelector('a.folderGhLink').href = item.html_url
+      section.appendChild(folder)
+    } else if (item.type === 'file') {
+      section.appendChild(articleFile.cloneNode(true))
+    }
+  })
+
+  dom._injectTpl(section)
+}
+/*
+<article class="gh-list-item gh-type-folder">
+<h2 class=gh-list-title><a href=></a></h2>
+<p><a href=>Voir sur Github</a></p>
+</article>
+*/
 
 /**
-* Get the node of blob github's link tag target
+* Replace the html main.container's childrens by a template content
 *
-* @return {Object} node Github link of blob.
+* @param {Object} templateContent a template content.
 */
-dom._getHtmlBlobGhLink = () => dom._getHtmlBlob().querySelector('a#ghBlobUrl')
+dom._injectTpl = tpl => {
+  const container = document.querySelector('main.container')
+  container.innerHTML = ''
+  container.appendChild(document.importNode(tpl, true))
+}
+
+/**
+* get ghPath with route.js
+*
+* @return {Object} node anchor.
+*/
+dom._ghPath = () =>
+  route.getHash()
