@@ -1,0 +1,34 @@
+.gh-list h2:before {
+  content: '';
+  display: table-cell;
+  width: 20px;
+  height: 20px;
+  padding-right: 10px;
+}
+
+.gh-type-repo h2:before {
+  background: url(../img/ico-repo.svg) 0 0 no-repeat;
+  background-size: 16px;
+}
+
+.gh-type-folder h2:before {
+  background: url(../img/ico-directory.svg) 0 0 no-repeat;
+  background-size: 20px;
+}
+
+.gh-type-file h2:before {
+  background: url(../img/ico-file-text.svg) 0 0 no-repeat;
+  background-size: 16px;
+}
+.gh-list h2 a {
+  display: table-cell;
+}
+
+.gh-list-item img {
+  margin-bottom: 15px;
+  margin-left: 30px;
+}
+
+.gh-list-content {
+  margin-left: 30px;
+}

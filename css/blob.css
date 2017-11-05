@@ -1,33 +1,33 @@
 /*
 CONTRIBUTIONS
 */
-.ghBlobTools {
+.blobTools {
   position: fixed;
   height: 100vh;
   width: 32px;
   padding-top: 45px;
   margin-left: -50px;
 }
-.ghBlobTools a {
+.blobTools a {
   display: block;
   text-indent: -9999px;
   opacity: .3;
   transition: opacity 0.3s;
 }
-.ghBlobTools a:hover {
+.blobTools a:hover {
   opacity: .8;
 }
-.ghBlobLink {
+.blobGhLink {
   width: 20px;
   height: 20px;
   margin: 0 auto;
 }
-.ghBlobLink {
+.blobGhLink {
   margin-bottom: 5px;
   background: url(../img/ico-github.svg) 0 0 no-repeat;
   background-size: 16px;
 }
-.page-top {
+.blobPageTop {
   position: absolute;
   bottom: 50px;
   width: 32px;
@@ -65,7 +65,7 @@ CONTRIBUTIONS
   padding-top: 10px;
   text-align: center;
 }
-#ghBlobContent {
+.blobContent {
   font-family: Georgia, 'Times New Roman', Times, serif;
   content: "medium";
   box-sizing: border-box;
@@ -74,72 +74,72 @@ CONTRIBUTIONS
   letter-spacing: 0.01rem;
   color: rgba(0,0,0,0.7);
 }
-#ghBlobContent h1 {
+.blobContent h1 {
   font-size: 2.25rem;
   line-height: 2.5rem;
   margin-top: 0;
   margin-bottom: 1.75rem;
 }
-#ghBlobContent h2 {
+.blobContent h2 {
   font-size: 1.9375rem;
   line-height: 1.75rem;
   margin-top: 3.5rem;
   margin-bottom: 1.75rem;
 }
-#ghBlobContent h3 {
+.blobContent h3 {
   font-size: 1.1875rem;
   line-height: 1.75rem;
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
 }
-#ghBlobContent h4 {
+.blobContent h4 {
   font-size: 1.1875rem;
   line-height: 1.75rem;
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
 }
-#ghBlobContent p,
-#ghBlobContent ul,
-#ghBlobContent ol,
-#ghBlobContent table{
+.blobContent p,
+.blobContent ul,
+.blobContent ol,
+.blobContent table{
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   font-size: 1.188rem;
   line-height: 1.5;
 }
-#ghBlobContent ul {
+.blobContent ul {
   margin-left: 20px;
 }
-#ghBlobContent ul ul {
+.blobContent ul ul {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   margin-left: 36px;
 }
-#ghBlobContent li {
+.blobContent li {
   position: relative;
   margin-bottom: 5px;
   padding-left: 20px;
   list-style-type: none;
 }
-#ghBlobContent li:before {
+.blobContent li:before {
   content: '>';
   position: absolute;
   left: 0;
   top: 0;
   font-weight: bold;
 }
-#ghBlobContent ol {
+.blobContent ol {
   padding-left: 0;
   counter-reset: section;
   list-style-type: none;
   margin-left: 20px;
 }
-#ghBlobContent ol li:before {
+.blobContent ol li:before {
   position: relative;
   counter-increment: section;
   content: counters(section, ".") " ";
 }
-#ghBlobContent img {
+.blobContent img {
   display: block;
   vertical-align: middle;
   padding: 4px;
@@ -149,35 +149,35 @@ CONTRIBUTIONS
   border-radius: 4px;
   transition: all .2s ease-in-out;
 }
-#ghBlobContent a {
+.blobContent a {
   color: #4d4d4d;
   text-decoration: none;
   border-bottom: 1px solid #4d4d4d;
   transition: all 0.3s
 }
-#ghBlobContent a:hover,
-#ghBlobContent a:focus {
+.blobContent a:hover,
+.blobContent a:focus {
   color: #29abe2;
   border-bottom-color: #29abe2;
 }
-#ghBlobContent pre,
-#ghBlobContent blockquote {
+.blobContent pre,
+.blobContent blockquote {
   margin: 0 2em;
   background-color: #fff;
 }
-#ghBlobContent pre {
+.blobContent pre {
   margin: 2em;
   padding: 1em;
   white-space: pre-wrap;
 }
-#ghBlobContent blockquote {
+.blobContent blockquote {
   padding: 0.5em 1em;
   letter-spacing: .01rem;
   font-weight: 400;
   font-style: italic;
   border-left: 5px solid #29abe2;
 }
-#ghBlobContent blockquote p {
+.blobContent blockquote p {
   margin: 0;
 }
 
@@ -208,23 +208,23 @@ TAGS
 }
 
 @media (max-width:768px) {
-  #ghBlobContent {
+  .blobContent {
     text-align: left;
   }
   .contribution-tools {
     display: none;
   }
-  #ghBlobContent blockquote {
+  .blobContent blockquote {
     margin: 0;
   }
   #parentRepo a {
     display: block;
   }
-  #ghBlobContent ul,
-  #ghBlobContent ol {
+  .blobContent ul,
+  .blobContent ol {
     margin-left: 0;
   }
-  #ghBlobContent pre {
+  .blobContent pre {
     padding: 0.5em;
     margin-left: 0;
     margin-right: 0;
