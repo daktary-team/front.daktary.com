@@ -1,3 +1,5 @@
+/* global api */
+
 /**
  * Functions dedicate to routing
  *
