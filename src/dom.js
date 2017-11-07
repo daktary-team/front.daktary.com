@@ -21,7 +21,6 @@ dom.getAnchor = hash => document.querySelector(`a[name="${hash}"]`)
 dom.injectInHtml = blobPromise => {
   blobPromise
     .then(page => {
-      console.log('page.type', page.type)
       switch (page.type) {
         case 'file':
           dom._injectBlobInHtml(page)
@@ -55,7 +54,7 @@ dom._injectBlobInHtml = page => {
 * @param {Object} page a json tree from daktary API.
 */
 dom._injectTreeInHtml = page => {
-  const tpl = document.querySelector('template#tplTree').content
+  const tpl = document.querySelector('template#tplTree').cloneNode(true).content
   const articleFile = tpl.querySelector('.gh-type-file')
   const articleFolder = tpl.querySelector('.gh-type-folder')
   const section = tpl.querySelector('section.gh-list')
@@ -65,30 +64,22 @@ dom._injectTreeInHtml = page => {
     if (item.type === 'dir') {
       let folder = articleFolder.cloneNode(true)
       folder.querySelector('h2 a.folderLink').innerText = item.name
-      folder.querySelector('h2 a.folderLink').href = item.html_url
-      folder.querySelector('a.folderGhLink').href = item.html_url
+      folder.querySelector('h2 a.folderLink').href = `#${item.path}`
+      folder.querySelector('a.folderGhLink').href = item.url
       section.appendChild(folder)
     } else if (item.type === 'file') {
       console.log('item', item)
       let file = articleFile.cloneNode(true)
       file.querySelector('h2 a.fileLink').innerText = item.meta ? item.meta.title : item.name
-      file.querySelector('h2 a.fileLink').href = item.html_url
-      file.querySelector('p.gh-list-excerpt').innerText += item.meta ? item.meta.description : ''
+      file.querySelector('h2 a.fileLink').href = `#${item.path}`
+      file.querySelector('p.gh-list-excerpt').innerText = item.meta ? item.meta.description : ''
+      file.querySelector('a.gh-list-readmore').title += item.meta ? item.meta.title : item.name
+      file.querySelector('a.gh-list-readmore').href = `#${item.path}`
       section.appendChild(file)
     }
     dom._injectTpl(section)
   })
 }
-/*
-      <article class="gh-list-item gh-type-file">
-        <h2 class=gh-list-title><a href=></a></h2>
-        <div class="gh-list-content">
-          <div class="gh-list-meta"></div>
-          <p class="gh-list-excerpt">Un système est un ensemble d'éléments interagissant entre eux selon certains principes ou règles. Les  études sur la complexité distinguent 4 niveaux de complexité décrits ici.</p>
-          <a class="gh-list-readmore" title="Lire la suite de la fiche : 4 niveaux de complexité d'un système" href="#lilianricaud/travail-en-reseau/blob/master/4_niveaux_complexite_systeme.md">Lire la suite de la fiche</a>
-         </div>
-      </article>
-*/
 
 /**
 * Replace the html main.container's childrens by a template content

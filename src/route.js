@@ -30,7 +30,7 @@ new Promise(resolve => {
   if (!hash) {
     resolve({type: 'home', body: '<h1>home</h1>'})
   } else {
-    api._fetch(hash).then(page => {
+    api.fetch(hash).then(page => {
       resolve(page)
     })
   }
