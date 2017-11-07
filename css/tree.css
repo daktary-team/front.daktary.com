@@ -1,0 +1,77 @@
+/*
+CONTRIBUTIONS LIST
+*/
+
+/*list of article*/
+.ghTree {
+  
+  }
+  .ghTreeItem {
+    position: relative;
+    padding: 20px 0;
+  }
+  .ghTreeItem:not(:last-child) {
+    margin-bottom: 30px;
+  }
+  .ghTreeItem:not(:last-child):after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    width: 25%;
+    height: 1px;
+    margin: auto;
+    background: #000;
+  }
+  .ghTreeTitle {
+    margin-top: 0;
+    margin-bottom: 15px;
+    line-height: 1;
+  /*  text-transform: uppercase;*/
+  }
+  .ghTreeMeta {
+    margin-bottom: 10px;
+    font-size: 0.8em;
+  }
+  .ghTreeMeta p {
+    margin: 0;
+  }
+  
+
+/*list of folder*/
+.ghTree h2:before {
+  content: '';
+  display: table-cell;
+  width: 20px;
+  height: 20px;
+  padding-right: 10px;
+}
+
+.ghTypeRepo h2:before {
+  background: url(../img/ico-repo.svg) 0 0 no-repeat;
+  background-size: 16px;
+}
+
+.ghTypeFolder h2:before {
+  background: url(../img/ico-directory.svg) 0 0 no-repeat;
+  background-size: 20px;
+}
+
+.ghTypeFile h2:before {
+  background: url(../img/ico-file-text.svg) 0 0 no-repeat;
+  background-size: 16px;
+}
+.ghTree h2 a {
+  display: table-cell;
+}
+
+.ghTreeItem img {
+  margin-bottom: 15px;
+  margin-left: 30px;
+}
+
+.ghTreeContent {
+  margin-left: 30px;
+}
