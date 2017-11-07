@@ -3,17 +3,17 @@ CONTRIBUTIONS LIST
 */
 
 /*list of article*/
-.gh-list {
+.ghTree {
   
   }
-  .gh-list-item {
+  .ghTreeItem {
     position: relative;
     padding: 20px 0;
   }
-  .gh-list-item:not(:last-child) {
+  .ghTreeItem:not(:last-child) {
     margin-bottom: 30px;
   }
-  .gh-list-item:not(:last-child):after {
+  .ghTreeItem:not(:last-child):after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -25,23 +25,23 @@ CONTRIBUTIONS LIST
     margin: auto;
     background: #000;
   }
-  .gh-list-title {
+  .ghTreeTitle {
     margin-top: 0;
     margin-bottom: 15px;
     line-height: 1;
   /*  text-transform: uppercase;*/
   }
-  .gh-list-meta {
+  .ghTreeMeta {
     margin-bottom: 10px;
     font-size: 0.8em;
   }
-  .gh-list-meta p {
+  .ghTreeMeta p {
     margin: 0;
   }
   
 
 /*list of folder*/
-.gh-list h2:before {
+.ghTree h2:before {
   content: '';
   display: table-cell;
   width: 20px;
@@ -49,29 +49,29 @@ CONTRIBUTIONS LIST
   padding-right: 10px;
 }
 
-.gh-type-repo h2:before {
+.ghTypeRepo h2:before {
   background: url(../img/ico-repo.svg) 0 0 no-repeat;
   background-size: 16px;
 }
 
-.gh-type-folder h2:before {
+.ghTypeFolder h2:before {
   background: url(../img/ico-directory.svg) 0 0 no-repeat;
   background-size: 20px;
 }
 
-.gh-type-file h2:before {
+.ghTypeFile h2:before {
   background: url(../img/ico-file-text.svg) 0 0 no-repeat;
   background-size: 16px;
 }
-.gh-list h2 a {
+.ghTree h2 a {
   display: table-cell;
 }
 
-.gh-list-item img {
+.ghTreeItem img {
   margin-bottom: 15px;
   margin-left: 30px;
 }
 
-.gh-list-content {
+.ghTreeContent {
   margin-left: 30px;
 }

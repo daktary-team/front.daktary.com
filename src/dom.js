@@ -28,6 +28,9 @@ dom.injectInHtml = blobPromise => {
         case 'tree':
           dom._injectTreeInHtml(page)
           break
+        default:
+          const container = document.querySelector('main.container')
+          container.innerHTML = page.body
       }
     })
 }
@@ -55,9 +58,9 @@ dom._injectBlobInHtml = page => {
 */
 dom._injectTreeInHtml = page => {
   const tpl = document.querySelector('template#tplTree').cloneNode(true).content
-  const articleFile = tpl.querySelector('.gh-type-file')
-  const articleFolder = tpl.querySelector('.gh-type-folder')
-  const section = tpl.querySelector('section.gh-list')
+  const articleFile = tpl.querySelector('.ghTypeFile')
+  const articleFolder = tpl.querySelector('.ghTypeFolder')
+  const section = tpl.querySelector('section.ghTree')
   section.innerHTML = ''
 
   page.body.forEach(item => {
@@ -68,13 +71,12 @@ dom._injectTreeInHtml = page => {
       folder.querySelector('a.folderGhLink').href = item.url
       section.appendChild(folder)
     } else if (item.type === 'file') {
-      console.log('item', item)
       let file = articleFile.cloneNode(true)
       file.querySelector('h2 a.fileLink').innerText = item.meta ? item.meta.title : item.name
       file.querySelector('h2 a.fileLink').href = `#${item.path}`
-      file.querySelector('p.gh-list-excerpt').innerText = item.meta ? item.meta.description : ''
-      file.querySelector('a.gh-list-readmore').title += item.meta ? item.meta.title : item.name
-      file.querySelector('a.gh-list-readmore').href = `#${item.path}`
+      file.querySelector('p.ghTreeExcerpt').innerText = item.meta ? item.meta.description : ''
+      file.querySelector('a.ghTreeReadmore').title += item.meta ? item.meta.title : item.name
+      file.querySelector('a.ghTreeReadmore').href = `#${item.path}`
       section.appendChild(file)
     }
     dom._injectTpl(section)
