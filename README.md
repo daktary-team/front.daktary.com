@@ -71,4 +71,4 @@ La commande précédente permet d'avoir accès à Daktary à partir de l'adresse
 - I18N
 
 # Licence
-[https://creativecommons.org/publicdomain/zero/1.0/legalcode.fr](CC0 1.0 Universel)
+[CC0 1.0 Universel](https://creativecommons.org/publicdomain/zero/1.0/legalcode.fr)
