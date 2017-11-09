@@ -9,13 +9,13 @@ Un outil pour afficher facilement des ressources présentent sur GitHub.
 
 # Hébergement
 
-Pour l'instant, nous utilisons [https://pages.github.com](Github Pages).
+Pour l'instant, nous utilisons [Github Pages](https://pages.github.com).
 
 Daktary n'utilise pas de technologie serveur ni de dépendance, tu peux donc très l'utiliser avec un simple navigateur.
 
 # Installation minimaliste
 
-1. Clic et enregistre le dossier zippé contenu dans ce [lien] (https://github.com/daktary-team/front.daktary.com/archive/master.zip)
+1. Clic et enregistre le dossier zippé contenu dans ce [lien](https://github.com/daktary-team/front.daktary.com/archive/master.zip)
 2. Double-clic sur le fichier *index.html*
 
 
@@ -43,23 +43,23 @@ Pour lancer un serveur local :
 $ npm start
 ```
 
-La commande précédente permet d'avoir accès à Daktary à partir de l'adresse : x@http://localhost:5000
+La commande précédente permet d'avoir accès à Daktary à partir de l'adresse : http://localhost:5000
 
 # Credits
 
-- [https://github.com/WolffThomas](Thomas Wolff) : Product Owner
-- [https://github.com/lilianricaud](Lilian Ricaud) : Affinage Backlog
-- [https://github.com/fuentesloic](Loïc Fuentès) : Affinage Backlog
-- [https://github.com/pointbar](Stéphane Langlois) : Développement
-- [https://github.com/newick](Erick Gardin) : Intégration
-- [https://github.com/AymericFaivre](Aymeric Faivre) : Web Design
-- [https://github.com/XavCC](Xavier Caodic) : Documentation
-- [https://github.com/lberrotte](Louise Berrotte) : Interviews
-- [https://github.com/Amanda-Martinez](Amanda Martinez) : Conseil UX
-- [https://github.com/vferries](Vincent Ferries) : Code review
-- [https://github.com/davidbgk](David Larlet) : Code review
-- [https://github.com/vinyll](Vincent Agnano) : Code review
-- [https://github.com/DavidBruant](David Bruant) : Code review
+- [Thomas Wolff](https://github.com/WolffThomas) : Product Owner
+- [Lilian Ricaud](https://github.com/lilianricaud) : Affinage Backlog
+- [Loïc Fuentès](https://github.com/fuentesloic) : Affinage Backlog
+- [Stéphane Langlois](https://github.com/pointbar) : Développement
+- [Erick Gardin](https://github.com/newick) : Intégration
+- [Aymeric Faivre](https://github.com/AymericFaivre) : Web Design
+- [Xavier Caodic](https://github.com/XavCC) : Documentation
+- [Louise Berrotte](https://github.com/lberrotte) : Interviews
+- [Amanda Martinez](https://github.com/Amanda-Martinez) : Conseil UX
+- [Vincent Ferries](https://github.com/vferries) : Code review
+- [David Larlet](https://github.com/davidbgk) : Code review
+- [Vincent Agnano](https://github.com/vinyll) : Code review
+- [David Bruant](https://github.com/DavidBruant) : Code review
 
 # À creuser
 
