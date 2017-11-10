@@ -124,6 +124,25 @@ header .search-engine input[type="submit"] {
 }
 
 /*
+ * Breadcrumbs
+ */
+.breadcrumb {
+  padding: 20px 0;
+  margin: 0px auto;
+  width: 620px;
+}
+.breadcrumb li {
+  display: inline;
+  list-style-type: none;
+}
+.breadcrumb li:not(:first-child) {
+  margin-left: 5px;
+}
+.breadcrumb li:not(:first-child):before {
+  content: '> ';
+}
+
+/*
  * BLOB
  */
 

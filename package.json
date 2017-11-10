@@ -1,6 +1,6 @@
 {
   "name": "front.daktary.com",
-  "version": "0.3",
+  "version": "0.3.0",
   "description": "Github markdown reader",
   "main": "index.js",
   "directories": {
