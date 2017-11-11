@@ -1,63 +1,94 @@
 <!DOCTYPE html>
 <html lang=fr>
-  <meta charset=UTF-8>
-  <meta name=viewport content="width=device-width", initial-scale=1.0>
-  <meta http-equiv=X-UA-Compatible content="ie=edge">
-  <title>Daktary : Lecteur de ressources Github</title>
-  <link rel=stylesheet href=./css/daktary.css>
+<meta charset=UTF-8>
+<meta name=viewport content="width=device-width" , initial-scale=1.0>
+<meta http-equiv=X-UA-Compatible content="ie=edge">
+<title>Daktary : Lecteur de ressources Github</title>
+<link rel=stylesheet href=./css/daktary.css>
 
-  <a name=top></a>
-  <main class=container id=blob></main>
+<header class="container">
+  <h1>
+    <a href="">#
+      <span>Daktary</span>
+    </a>
+  </h1>
+  <div class="search-engine" style="display: none;">
+    <fieldset>
+      <input id="gh-search" placeholder="Recherche" type="text">
+      <input id="button-gh-search" value="Rechercher" type="submit">
+    </fieldset>
+  </div>
+</header>
+<a name=top></a>
+<div class=breadcrumb></div>
+<main class=container id=blob></main>
 
-  <script type=text/javascript src=./src/api.js></script>
-  <script type=text/javascript src=./src/dom.js></script>
-  <script type=text/javascript src=./src/route.js></script>
+<script type=text/javascript src=./src/api.js></script>
+<script type=text/javascript src=./src/dom.js></script>
+<script type=text/javascript src=./src/route.js></script>
 
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      dom.injectInHtml(route.getPage())
-    })
-    window.addEventListener('hashchange', evt => {
-      const anchor = dom.getAnchor(route.getHash()) 
-      if (!! anchor) {
-        anchor.scrollIntoView()
-        window.location = evt.oldURL
-      } else {
-        dom.injectInHtml(route.getPage())
-      }
-    })
-  </script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    route.render()
+  })
+  window.addEventListener('hashchange', evt => {
+    const anchor = dom.getAnchor(route.getHash())
+    if (!!anchor) {
+      anchor.scrollIntoView()
+      window.location = evt.oldURL
+    } else {
+      route.render()
+    }
+  })
+</script>
 
-  <template id=tplHome>
-    <h1>HOME</h1>
-  </template>
+<template id=tplHome>
+  <h1>HOME</h1>
+</template>
 
-  <template id=tplBlob>
-    <aside class=blobTools>
-      <a href="" title="Voir sur Github" class="blobGhLink tooltip"></a>
-      <a href=#top class=blobPageTop>Haut de page</a>
-    </aside>
-    <article class=blobContent></article>
-  </template>
+<template id=tplBreadcrumb>
+  <ul>
+    <li><a href=#>Accueil</a></li>
+  </ul>
+</template>
 
-  <template id=tplTree>
-    <section id=ghTree class=ghTree>
-      <article class="ghTreeItem ghTypeFolder">
-        <h2 class=ghTreeTitle><a href="" class=folderLink></a></h2>
-        <p><a href="" class=folderGhLink>Voir sur Github</a></p>
-      </article>
-      <article class="ghTreeItem ghTypeFile">
-        <h2 class=ghTreeTitle><a href="" class=fileLink></a></h2>
-        <div class="ghTreeContent">
-          <div class="ghTreeMeta"></div>
-          <p class=ghTreeExcerpt></p>
-          <a class=ghTreeReadmore title="Lire la suite de la fiche : " href="">Lire la suite de la fiche</a>
-        </div>
-      </article>
-      <article class="ghTreeItem ghTypeRepo">
-        <h2 class=ghTreeTitle><a href="" class=repoLink></a></h2>
-        <p><a href="" class=repoGhLink>Voir sur Github</a></p>
-      </article>
-    </section>
-  </template>
+<template id=tplBlob>
+  <aside class=blobTools>
+    <a href="" title="Voir sur Github" class="blobGhLink tooltip"></a>
+    <a href=#top class=blobPageTop>Haut de page</a>
+  </aside>
+  <article class=blobContent></article>
+</template>
+
+<template id=tplTree>
+  <section id=ghTree class=ghTree>
+    <article class="ghTreeItem ghTypeFolder">
+      <h2 class=ghTreeTitle>
+        <a href="" class=folderLink></a>
+      </h2>
+      <p>
+        <a href="" class=folderGhLink>Voir sur Github</a>
+      </p>
+    </article>
+    <article class="ghTreeItem ghTypeFile">
+      <h2 class=ghTreeTitle>
+        <a href="" class=fileLink></a>
+      </h2>
+      <div class="ghTreeContent">
+        <div class="ghTreeMeta"></div>
+        <p class=ghTreeExcerpt></p>
+        <a class=ghTreeReadmore title="Lire la suite de la fiche : " href="">Lire la suite de la fiche</a>
+      </div>
+    </article>
+    <article class="ghTreeItem ghTypeRepo">
+      <h2 class=ghTreeTitle>
+        <a href="" class=repoLink></a>
+      </h2>
+      <p>
+        <a href="" class=repoGhLink>Voir sur Github</a>
+      </p>
+    </article>
+  </section>
+</template>
+
 </html>

@@ -1,4 +1,4 @@
-/* global api */
+/* global api, dom */
 
 /**
  * Functions dedicate to routing
@@ -37,3 +37,26 @@ new Promise(resolve => {
     })
   }
 })
+
+/**
+* Inject Github document in html
+*
+*/
+route.render = () =>
+  route.getPage()
+    .then(page => {
+      switch (page.type) {
+        case 'file':
+          dom._injectBlobInHtml(page)
+          break
+        case 'tree':
+          dom._injectTreeInHtml(page)
+          break
+        case 'repos':
+          dom._injectTreeInHtml(page)
+          break
+        default:
+          const container = document.querySelector('main.container')
+          container.innerHTML = page.body
+      }
+    })
