@@ -38,12 +38,12 @@ Pour installer les dépendances :
 $ npm install
 ```
 
-Pour lancer un serveur local :
+Pour commencer lancer un serveur local :
 ```bash
-$ npm start
+$ python -m SimpleHTTPServer 8002
 ```
 
-La commande précédente permet d'avoir accès à Daktary à partir de l'adresse : http://localhost:5000
+La commande précédente permet d'avoir accès à Daktary à partir de l'adresse : http://localhost:8002
 
 # Credits
 
