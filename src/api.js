@@ -7,8 +7,5 @@ const api = {}
  * @return {Promise} json Json file with html and metas.
  */
 api.fetch = apiUrl =>
-  new Promise(resolve =>
-    window.fetch(`http://api.daktary.com/${apiUrl}`)
-      .then(response => response.json())
-      .then(json => resolve(json))
-  )
+  fetch(`http://api.daktary.com/${apiUrl}`)
+    .then(response => response.json())
