@@ -47,13 +47,13 @@ route.render = () =>
     .then(page => {
       switch (page.type) {
         case 'file':
-          dom._injectBlobInHtml(page)
+          dom.injectBlobInHtml(page)
           break
         case 'tree':
-          dom._injectTreeInHtml(page)
+          dom.injectTreeInHtml(page)
           break
         case 'repos':
-          dom._injectTreeInHtml(page)
+          dom.injectTreeInHtml(page)
           break
         default:
           const container = document.querySelector('main.container')
