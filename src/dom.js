@@ -18,34 +18,31 @@ const dom = {}
 * @return {Object} DOM partial DOM represents blob page.
 */
 dom._createBlobPage = page => {
-  const tpl = document.querySelector('template#tplBlob').content
-  tpl.querySelector('.blobGhLink').href = `https://github.com/${dom._ghPath()}`
-  tpl.querySelector('.blobContent').innerHTML = page.body
-  return tpl
+  const blob = document.querySelector('template#tplBlob').cloneNode(true).content
+  blob.prepend(dom._createBreadcrumb(page.breadcrumb))
+  blob.querySelector('.blobGhLink').href = `https://github.com/${dom._ghPath()}`
+  blob.querySelector('.blobContent').insertAdjacentHTML('afterbegin', page.body)
+  return blob
 }
 
 /**
-* Build a breadcrumb with path
+* Create DOM for breadcrumb.
 *
-* @param {String} type a github type like: repo, tree or files.
-* @param {String} path a github path.
+* @param {Object} breadcrumb a json breadcrumb data from daktary API.
+* @return {Object} DOM partial DOM represents breadcrumb.
 */
-dom._renderBreadcrumb = breadcrumbData => {
-  
+dom._createBreadcrumb = breadcrumbData => {
   const getLi = (ul, {link, title}) => {
     const li = ul.querySelector('li').cloneNode(true)
     const a = li.querySelector('a')
     a.href = `#${link}`
-    a.innerText = title
+    a.append(title)
     return li
   }
-
   const breadcrumb = document.querySelector('template#tplBreadcrumb').cloneNode(true).content
   const ul = breadcrumb.querySelector('ul')
-  const div = document.querySelector('div.breadcrumb')
-  breadcrumbData.forEach(elt => ul.appendChild(getLi(ul, elt)))
-  div.innerHTML = ''
-  div.appendChild(ul)
+  breadcrumbData.forEach(elt => ul.append(getLi(ul, elt)))
+  return ul
 }
 
 /**
@@ -56,7 +53,7 @@ dom._renderBreadcrumb = breadcrumbData => {
 dom._injectTpl = tpl => {
   const container = document.querySelector('main.container')
   container.innerHTML = ''
-  container.appendChild(document.importNode(tpl, true))
+  container.append(document.importNode(tpl, true))
 }
 
 /**
@@ -85,7 +82,6 @@ dom.getAnchor = hash =>
 * @param {Object} page a json document from daktary API.
 */
 dom.injectBlobInHtml = page => {
-  dom._renderBreadcrumb(page.breadcrumb)
   dom._injectTpl(dom._createBlobPage(page))
 }
 
@@ -101,8 +97,7 @@ dom.injectTreeInHtml = page => {
   const repoAlias = tree.querySelector('.ghTypeRepo')
   const section = tree.querySelector('section.ghTree')
   section.innerHTML = ''
-
-  dom._renderBreadcrumb(page.breadcrumb)
+  section.prepend(dom._createBreadcrumb(page.breadcrumb))
 
   page.body.forEach(item => {
     switch (item.type) {
