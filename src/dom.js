@@ -12,16 +12,76 @@ const dom = {}
  */
 
 /**
+* Get tree template for a specific item.
+*
+* @param {Object} typeSelector a css selector to extract item from template.
+* @return {Object} DOM partial DOM represents item.
+*/
+dom._getTplTree = typeSelector =>
+  document.querySelector('template#tplTree')
+  .cloneNode(true).content
+  .querySelector(typeSelector)
+
+/**
+* Create DOM for file's tree.
+*
+* @param {Object} file a json file from daktary API.
+* @return {Object} DOM partial DOM represents file description.
+*/
+dom._createFile = fileData => {
+  const file = dom._getTplTree('.ghTypeFile')
+  file.querySelector('h2 a.fileLink')
+    .append(`${fileData.meta ? fileData.meta.title : fileData.name}`)
+  file.querySelector('h2 a.fileLink')
+    .href = `#${fileData.full_name}`
+  file.querySelector('p.ghTreeExcerpt')
+    .append(`${fileData.meta ? fileData.meta.description : ''}`)
+  file.querySelector('a.ghTreeReadmore')
+    .title += fileData.meta ? fileData.meta.title : fileData.name
+  file.querySelector('a.ghTreeReadmore')
+    .href = `#${fileData.full_name}`
+  return file
+}
+
+/**
+* Create DOM for folder's tree.
+*
+* @param {Object} folderData a json folder from daktary API.
+* @return {Object} DOM partial DOM represents folder description.
+*/
+dom._createFolder = folderData => {
+  const folder = dom._getTplTree('.ghTypeFolder')
+  folder.querySelector('h2 a.folderLink').append(folderData.name)
+  folder.querySelector('h2 a.folderLink').href = `#${folderData.full_name}`
+  folder.querySelector('a.folderGhLink').href = folderData.html_url
+  return folder
+}
+
+/**
+* Create DOM for repos's tree.
+*
+* @param {Object} repoData a json repo from daktary API.
+* @return {Object} DOM partial DOM represents repo description.
+*/
+dom._createRepo = repoData => {
+  const repo = dom._getTplTree('.ghTypeRepo')
+  repo.querySelector('h2 a.repoLink').append(repoData.name)
+  repo.querySelector('h2 a.repoLink').href = `#${repoData.full_name}`
+  repo.querySelector('a.repoGhLink').href = repoData.html_url
+  return repo
+}
+
+/**
 * Create DOM for blob page.
 *
-* @param {Object} page a json tree from daktary API.
+* @param {Object} blobData a json file from daktary API.
 * @return {Object} DOM partial DOM represents blob page.
 */
-dom._createBlobPage = page => {
+dom._createBlobPage = blobData => {
   const blob = document.querySelector('template#tplBlob').cloneNode(true).content
-  blob.prepend(dom._createBreadcrumb(page.breadcrumb))
+  blob.prepend(dom._createBreadcrumb(blobData.breadcrumb))
   blob.querySelector('.blobGhLink').href = `https://github.com/${dom._ghPath()}`
-  blob.querySelector('.blobContent').insertAdjacentHTML('afterbegin', page.body)
+  blob.querySelector('.blobContent').insertAdjacentHTML('afterbegin', blobData.body)
   return blob
 }
 
@@ -91,38 +151,20 @@ dom.injectBlobInHtml = page => {
 * @param {Object} page a json tree from daktary API.
 */
 dom.injectTreeInHtml = page => {
-  const tree = document.querySelector('template#tplTree').cloneNode(true).content
-  const fileAlias = tree.querySelector('.ghTypeFile')
-  const folderAlias = tree.querySelector('.ghTypeFolder')
-  const repoAlias = tree.querySelector('.ghTypeRepo')
-  const section = tree.querySelector('section.ghTree')
+  const section = dom._getTplTree('section.ghTree')
   section.innerHTML = ''
   section.prepend(dom._createBreadcrumb(page.breadcrumb))
 
   page.body.forEach(item => {
     switch (item.type) {
       case 'file':
-        const file = fileAlias.cloneNode(true)
-        file.querySelector('h2 a.fileLink').innerText = item.meta ? item.meta.title : item.name
-        file.querySelector('h2 a.fileLink').href = `#${item.full_name}`
-        file.querySelector('p.ghTreeExcerpt').innerText = item.meta ? item.meta.description : ''
-        file.querySelector('a.ghTreeReadmore').title += item.meta ? item.meta.title : item.name
-        file.querySelector('a.ghTreeReadmore').href = `#${item.full_name}`
-        section.appendChild(file)
+        section.append(dom._createFile(item))
         break
       case 'dir':
-        const folder = folderAlias.cloneNode(true)
-        folder.querySelector('h2 a.folderLink').innerText = item.name
-        folder.querySelector('h2 a.folderLink').href = `#${item.full_name}`
-        folder.querySelector('a.folderGhLink').href = item.html_url
-        section.appendChild(folder)
+        section.append(dom._createFolder(item))
         break
       case 'repo':
-        const repo = repoAlias.cloneNode(true)
-        repo.querySelector('h2 a.repoLink').innerText = item.name
-        repo.querySelector('h2 a.repoLink').href = `#${item.full_name}`
-        repo.querySelector('a.repoGhLink').href = item.html_url
-        section.appendChild(repo)
+        section.append(dom._createRepo(item))
     }
     dom._injectTpl(section)
   })
