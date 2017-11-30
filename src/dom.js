@@ -23,15 +23,21 @@ dom._getTplTree = typeSelector =>
   .querySelector(typeSelector)
 
 /**
+* Get blob template.
+*
+* @return {Object} DOM partial DOM represents blob.
+*/
+dom._getTplBlob = () =>
+  document.querySelector('template#tplBlob').cloneNode(true).content
+
+/**
 * Get breadcrumb template.
 *
-* @param {Object} selector a css selector.
 * @return {Object} DOM partial DOM represents breadcrumb.
 */
-dom._getTplBreadcrumb = selector =>
+dom._getTplBreadcrumb = () =>
   document.querySelector('template#tplBreadcrumb')
     .cloneNode(true).content
-    .querySelector('ul')
 
 /**
 * Create DOM for file's tree.
@@ -89,7 +95,7 @@ dom._createRepo = repoData => {
 * @return {Object} DOM partial DOM represents blob page.
 */
 dom._createBlobPage = blobData => {
-  const blob = document.querySelector('template#tplBlob').cloneNode(true).content
+  const blob = dom._getTplBlob()
   blob.prepend(dom._createBreadcrumb(blobData.breadcrumb))
   blob.querySelector('.blobGhLink').href = `https://github.com/${dom._ghPath()}`
   blob.querySelector('.blobContent').insertAdjacentHTML('afterbegin', blobData.body)
@@ -107,10 +113,11 @@ dom._createBreadcrumb = breadcrumbData => {
     const li = ul.querySelector('li').cloneNode(true)
     const a = li.querySelector('a')
     a.href = `#${link}`
+    a.innerHTML = ''
     a.append(title)
     return li
   }
-  const ul = dom._getTplBreadcrumb('ul')
+  const ul = dom._getTplBreadcrumb().querySelector('ul')
   breadcrumbData.forEach(elt => ul.append(getLi(ul, elt)))
   return ul
 }
