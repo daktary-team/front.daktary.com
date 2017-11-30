@@ -23,6 +23,17 @@ dom._getTplTree = typeSelector =>
   .querySelector(typeSelector)
 
 /**
+* Get breadcrumb template.
+*
+* @param {Object} selector a css selector.
+* @return {Object} DOM partial DOM represents breadcrumb.
+*/
+dom._getTplBreadcrumb = selector =>
+  document.querySelector('template#tplBreadcrumb')
+    .cloneNode(true).content
+    .querySelector('ul')
+
+/**
 * Create DOM for file's tree.
 *
 * @param {Object} file a json file from daktary API.
@@ -99,8 +110,7 @@ dom._createBreadcrumb = breadcrumbData => {
     a.append(title)
     return li
   }
-  const breadcrumb = document.querySelector('template#tplBreadcrumb').cloneNode(true).content
-  const ul = breadcrumb.querySelector('ul')
+  const ul = dom._getTplBreadcrumb('ul')
   breadcrumbData.forEach(elt => ul.append(getLi(ul, elt)))
   return ul
 }
