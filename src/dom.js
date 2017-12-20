@@ -1,4 +1,4 @@
-/* global route */
+/* global route tpl */
 
 /**
  * Functions dedicate to DOM interaction
@@ -8,36 +8,132 @@
 const dom = {}
 
 /**
- * Private functions
+ * ----------------
+ * Public functions
+ * ----------------
  */
 
 /**
-* Get tree template for a specific item.
+* Get anchor in html
 *
-* @param {Object} typeSelector a css selector to extract item from template.
-* @return {Object} DOM partial DOM represents item.
+* @return {Object} node anchor.
 */
-dom._getTplTree = typeSelector =>
-  document.querySelector('template#tplTree')
-  .cloneNode(true).content
-  .querySelector(typeSelector)
+dom.getAnchor = hash => document.querySelector(`a[name="${hash}"]`)
 
 /**
-* Get blob template.
+* Render Github document in html
 *
-* @return {Object} DOM partial DOM represents blob.
+* @param {Object} page a json document from daktary API.
+* @return {Object} documentFragment represents Github document in html.
 */
-dom._getTplBlob = () =>
-  document.querySelector('template#tplBlob').cloneNode(true).content
+dom.render = page => {
+  try {
+    dom[dom._getRenderer(page.type)](page)
+  } catch (err) {
+    console.warn('err', err)
+    const container = document.querySelector('main.container')
+    container.innerHTML = page.body
+  }
+}
 
 /**
-* Get breadcrumb template.
+ * -----------------
+ * Private functions
+ * -----------------
+ */
+
+/**
+ * ----------
+ * BreadCrumb
+ * ----------
+ */
+
+/**
+* Create DOM for breadcrumb.
 *
+* @param {Object} data a json breadcrumb data from daktary API.
 * @return {Object} DOM partial DOM represents breadcrumb.
 */
-dom._getTplBreadcrumb = () =>
-  document.querySelector('template#tplBreadcrumb')
-    .cloneNode(true).content
+dom._createBreadcrumb = data => {
+  const {containerTpl, itemTpl, linkTpl} = tpl.getBreadCrumbTags()
+  data.forEach(({ link, title }) => {
+    const itemClone = itemTpl.cloneNode(true)
+    itemClone.innerHTML = ''
+    const linkClone = linkTpl.cloneNode(true)
+    linkClone.innerHTML = ''
+
+    linkClone.href = `#${link}`
+    linkClone.append(title)
+    itemClone.append(linkClone)
+    
+    containerTpl.append(itemClone)
+  })
+  return containerTpl
+}
+
+dom._prependBreadCrumb = (fragment, data) =>
+  fragment.prepend(dom._createBreadcrumb(data))
+
+/**
+ * ------
+ * Render
+ * ------
+ */
+
+/**
+* Get the method name to render the page.
+*
+* @param {String} type a file, a tree or a repo.
+* @return {String} name of the method - ex. _renderTree.
+*/
+dom._getRenderer = type => {
+  return `_render${type[0].toUpperCase()}${type.slice(1)}`
+}
+
+/**
+* Get the method name to create the page.
+*
+* @param {String} type a file, a tree or a repo.
+* @return {String} name of the method - ex. _createrTree.
+*/
+dom._getCreaterTree = type => {
+  return `_createTree${type[0].toUpperCase()}${type.slice(1)}`
+}
+
+dom._renderHome = page => {
+  const container = document.querySelector('main.container')
+  container.innerHTML = page.body
+}
+
+/**
+* Inject Github document in html
+*
+* @param {Object} page a json document from daktary API.
+*/
+dom._renderFile = page => {
+  dom._injectTpl(dom._createFilePage(page))
+}
+
+/**
+* Inject Github repos in html
+*
+* @param {Object} page a json tree from daktary API.
+*/
+dom._renderRepo = page => dom.renderTree()
+
+/**
+* Inject Github tree in html
+*
+* @param {Object} page a json tree from daktary API.
+*/
+dom._renderTree = page => {
+  const containerTpl = tpl.getTreeTags().containerTpl
+  dom._prependBreadCrumb(containerTpl, page.breadcrumb)
+  page.body.forEach(item => {
+    containerTpl.append(dom[dom._getCreaterTree(item.type)](item))
+    dom._injectTpl(containerTpl)
+  })
+}
 
 /**
 * Create DOM for file's tree.
@@ -45,81 +141,51 @@ dom._getTplBreadcrumb = () =>
 * @param {Object} file a json file from daktary API.
 * @return {Object} DOM partial DOM represents file description.
 */
-dom._createFile = fileData => {
-  const file = dom._getTplTree('.ghTypeFile')
-  file.querySelector('h2 a.fileLink')
-    .append(`${fileData.meta ? fileData.meta.title : fileData.name}`)
-  file.querySelector('h2 a.fileLink')
-    .href = `#${fileData.full_name}`
-  file.querySelector('p.ghTreeExcerpt')
-    .append(`${fileData.meta ? fileData.meta.description : ''}`)
-  file.querySelector('a.ghTreeReadmore')
-    .title += fileData.meta ? fileData.meta.title : fileData.name
-  file.querySelector('a.ghTreeReadmore')
-    .href = `#${fileData.full_name}`
-  return file
+dom._createTreeFile = data => {
+  const {containerTpl, linkTpl, readmoreLinkTpl, excerptTpl} = tpl.getTreeTags().file
+  linkTpl.append(`${data.meta ? data.meta.title : data.name}`)
+  linkTpl.href = `#${data.full_name}`
+  excerptTpl.append(`${data.meta ? data.meta.description : ''}`)
+  readmoreLinkTpl.title += data.meta ? data.meta.title : data.name
+  readmoreLinkTpl.href = `#${data.full_name}`
+  return containerTpl
 }
 
 /**
-* Create DOM for folder's tree.
+* Create DOM for Folder's tree.
 *
-* @param {Object} folderData a json folder from daktary API.
-* @return {Object} DOM partial DOM represents folder description.
+* @param {Object} data a json repo from daktary API.
+* @return {Object} DOM partial DOM represents repos or folders description.
 */
-dom._createFolder = folderData => {
-  const folder = dom._getTplTree('.ghTypeFolder')
-  folder.querySelector('h2 a.folderLink').append(folderData.name)
-  folder.querySelector('h2 a.folderLink').href = `#${folderData.full_name}`
-  folder.querySelector('a.folderGhLink').href = folderData.html_url
-  return folder
+dom._createTreeDir = data => {
+  const {containerTpl, linkTpl, githubLinkTpl} = tpl.getTreeTags().dir
+  linkTpl.append(data.name)
+  linkTpl.href = `#${data.full_name}`
+  githubLinkTpl.href = data.html_url
+  return containerTpl
 }
 
 /**
-* Create DOM for repos's tree.
+* Create DOM for Repo's tree.
 *
-* @param {Object} repoData a json repo from daktary API.
-* @return {Object} DOM partial DOM represents repo description.
+* @param {Object} data a json repo from daktary API.
+* @return {Object} DOM partial DOM represents repos description.
 */
-dom._createRepo = repoData => {
-  const repo = dom._getTplTree('.ghTypeRepo')
-  repo.querySelector('h2 a.repoLink').append(repoData.name)
-  repo.querySelector('h2 a.repoLink').href = `#${repoData.full_name}`
-  repo.querySelector('a.repoGhLink').href = repoData.html_url
-  return repo
-}
+dom._createTreeRepo = (tplTags, data) =>
+  dom._createTreeDir(tplTags, data)
 
 /**
-* Create DOM for blob page.
+* Create DOM for file page.
 *
-* @param {Object} blobData a json file from daktary API.
-* @return {Object} DOM partial DOM represents blob page.
+* @param {Object} data a json file from daktary API.
+* @return {Object} DOM partial DOM represents file page.
 */
-dom._createBlobPage = blobData => {
-  const blob = dom._getTplBlob()
-  blob.prepend(dom._createBreadcrumb(blobData.breadcrumb))
-  blob.querySelector('.blobGhLink').href = `https://github.com/${dom._ghPath()}`
-  blob.querySelector('.blobContent').insertAdjacentHTML('afterbegin', blobData.body)
-  return blob
-}
-
-/**
-* Create DOM for breadcrumb.
-*
-* @param {Object} breadcrumb a json breadcrumb data from daktary API.
-* @return {Object} DOM partial DOM represents breadcrumb.
-*/
-dom._createBreadcrumb = breadcrumbData => {
-  const getLi = (ul, {link, title}) => {
-    const li = ul.querySelector('li').cloneNode(true)
-    const a = li.querySelector('a')
-    a.href = `#${link}`
-    a.innerHTML = ''
-    a.append(title)
-    return li
-  }
-  const ul = dom._getTplBreadcrumb().querySelector('ul')
-  breadcrumbData.forEach(elt => ul.append(getLi(ul, elt)))
-  return ul
+dom._createFilePage = data => {
+  const {containerTpl, contentTpl, githubLinkTpl} = tpl.getFileTags()
+  dom._prependBreadCrumb(containerTpl, data.breadcrumb)
+  githubLinkTpl.href = `https://github.com/${dom._ghPath()}`
+  contentTpl.insertAdjacentHTML('afterbegin', data.body)
+  return containerTpl
 }
 
 /**
@@ -140,49 +206,3 @@ dom._injectTpl = tpl => {
 */
 dom._ghPath = () =>
   route.getHash()
-
-/**
- * Public functions
- */
-
-/**
-* get anchor in html
-*
-* @return {Object} node anchor.
-*/
-dom.getAnchor = hash =>
-  document.querySelector(`a[name="${hash}"]`)
-
-/**
-* Inject Github document in html
-*
-* @param {Object} page a json document from daktary API.
-*/
-dom.injectBlobInHtml = page => {
-  dom._injectTpl(dom._createBlobPage(page))
-}
-
-/**
-* Inject Github tree in html
-*
-* @param {Object} page a json tree from daktary API.
-*/
-dom.injectTreeInHtml = page => {
-  const section = dom._getTplTree('section.ghTree')
-  section.innerHTML = ''
-  section.prepend(dom._createBreadcrumb(page.breadcrumb))
-
-  page.body.forEach(item => {
-    switch (item.type) {
-      case 'file':
-        section.append(dom._createFile(item))
-        break
-      case 'dir':
-        section.append(dom._createFolder(item))
-        break
-      case 'repo':
-        section.append(dom._createRepo(item))
-    }
-    dom._injectTpl(section)
-  })
-}
