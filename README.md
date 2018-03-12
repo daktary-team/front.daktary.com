@@ -5,7 +5,7 @@
 
 - Accès : http://daktary.com
 
-Un outil pour afficher facilement des ressources présentent sur GitHub.
+Un outil pour afficher facilement des ressources présentes sur GitHub.
 
 # Hébergement
 
