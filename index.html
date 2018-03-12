@@ -4,26 +4,27 @@
 <meta name=viewport content="width=device-width" , initial-scale=1.0>
 <meta http-equiv=X-UA-Compatible content="ie=edge">
 <title>Daktary : Lecteur de ressources Github</title>
+
 <link rel=stylesheet href=./css/daktary.css>
 
-<header class="container">
+<header class=container>
   <h1>
     <a href="">#
       <span>Daktary</span>
     </a>
   </h1>
-  <div class="search-engine" style="display: none;">
+  <div class=search-engine style="display: none;">
     <fieldset>
-      <input id="gh-search" placeholder="Recherche" type="text">
-      <input id="button-gh-search" value="Rechercher" type="submit">
+      <input id=gh-search placeholder=Recherche type=text>
+      <input id=button-gh-search value=Rechercher type=submit>
     </fieldset>
   </div>
 </header>
 <a name=top></a>
-<div class=breadcrumb></div>
-<main class=container id=blob></main>
+<main class=container></main>
 
 <script type=text/javascript src=./src/api.js></script>
+<script type=text/javascript src=./src/tpl.js></script>
 <script type=text/javascript src=./src/dom.js></script>
 <script type=text/javascript src=./src/route.js></script>
 
@@ -47,48 +48,45 @@
 </template>
 
 <template id=tplBreadcrumb>
-  <ul>
-    <li><a href=#>Accueil</a></li>
+  <ul class=breadcrumb data-title=container>
+    <li data-title=item><a href=# data-title=link>Accueil</a></li>
   </ul>
 </template>
 
-<template id=tplBlob>
+<template id=tplFile>
   <aside class=blobTools>
-    <a href="" title="Voir sur Github" class="blobGhLink tooltip"></a>
+    <a href="" title="Voir sur Github" class="blobGhLink tooltip" data-title=githubLink></a>
     <a href=#top class=blobPageTop>Haut de page</a>
   </aside>
-  <article class=blobContent></article>
+  <article class=blobContent data-title=content></article>
 </template>
 
 <template id=tplTree>
-  <section id=ghTree class=ghTree>
-    <article class="ghTreeItem ghTypeFolder">
+  <section id=ghTree class=ghTree data-title=tree>
+    <article class="ghTreeItem ghTypeFolder" data-title=dir>
       <h2 class=ghTreeTitle>
-        <a href="" class=folderLink></a>
+        <a class=folderLink data-title=folderLink></a>
       </h2>
-      <p>
-        <a href="" class=folderGhLink>Voir sur Github</a>
-      </p>
+      <a class=folderGhLink data-title=folderGithubLink>Voir sur Github</a>
     </article>
-    <article class="ghTreeItem ghTypeFile">
+    <article class="ghTreeItem ghTypeFile" data-title=file>
       <h2 class=ghTreeTitle>
-        <a href="" class=fileLink></a>
+        <a class=fileLink data-title=fileLink></a>
       </h2>
-      <div class="ghTreeContent">
-        <div class="ghTreeMeta"></div>
-        <p class=ghTreeExcerpt></p>
-        <a class=ghTreeReadmore title="Lire la suite de la fiche : " href="">Lire la suite de la fiche</a>
+      <div class=ghTreeContent>
+        <div class=ghTreeMeta></div>
+        <p class=ghTreeExcerpt data-title=fileExcerpt></p>
+        <a class=ghTreeReadmore title="Lire la suite de la fiche : " data-title=fileReadmoreLink>Lire la suite de la fiche</a>
       </div>
     </article>
-    <article class="ghTreeItem ghTypeRepo">
+    <article class="ghTreeItem ghTypeRepo" data-title=repo>
       <h2 class=ghTreeTitle>
-        <a href="" class=repoLink></a>
+        <a class=repoLink data-title=repoLink></a>
       </h2>
       <p>
-        <a href="" class=repoGhLink>Voir sur Github</a>
+        <a class=repoGhLink data-title=repoGithubLink>Voir sur Github</a>
       </p>
     </article>
   </section>
 </template>
-
 </html>
