@@ -13,12 +13,6 @@
       <span>Daktary</span>
     </a>
   </h1>
-  <div class=search-engine style="display: none;">
-    <fieldset>
-      <input id=gh-search placeholder=Recherche type=text>
-      <input id=button-gh-search value=Rechercher type=submit>
-    </fieldset>
-  </div>
 </header>
 <a name=top></a>
 <main class=container></main>
@@ -33,7 +27,7 @@
     route.render()
   })
   window.addEventListener('hashchange', evt => {
-    const anchor = dom.getAnchor(route.getHash())
+    const anchor = Dom.getAnchor(document, route.getHash())
     if (!!anchor) {
       anchor.scrollIntoView()
       window.location = evt.oldURL
