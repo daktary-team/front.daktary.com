@@ -51,24 +51,16 @@ Dom.render = page => {
 /**
 * Create DOM for breadcrumb.
 *
-* @param {Object} tpl a breadcrumb template data.
 * @param {Object} data a json breadcrumb data from daktary API.
 * @return {Object} partial DOM represents breadcrumb.
 */
-Dom._createBreadcrumb = ({containerTpl, itemTpl, linkTpl}, data) => {
-  data.forEach(({ link, title }) => {
-    const itemClone = itemTpl.cloneNode(true)
-    itemClone.innerHTML = ''
-    const linkClone = linkTpl.cloneNode(true)
-    linkClone.innerHTML = ''
-
-    linkClone.href = `#${link}`
-    linkClone.append(title)
-    itemClone.append(linkClone)
-    
-    containerTpl.append(itemClone)
-  })
-  return containerTpl
+Dom._createBreadcrumb = data => {
+  return Bouture.ul(
+    {'class': 'breadcrumb'},
+    {'data-title': 'container'},
+    data.map(({ link, title }) =>
+      Bouture.li({'data-title': 'item'}).a({href: `#${link}`}, {'data-title': 'link'}, title))
+    ).getElement()
 }
 
 /**
@@ -79,7 +71,7 @@ Dom._createBreadcrumb = ({containerTpl, itemTpl, linkTpl}, data) => {
 * @return {String} name of the method - ex. _renderTree.
 */
 Dom._prependBreadCrumb = (fragment, data) =>
-  fragment.prepend(Dom._createBreadcrumb(tpl.getBreadCrumbTags(), data))
+  fragment.prepend(Dom._createBreadcrumb(data))
 
 /**
  * ------
