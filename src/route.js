@@ -35,5 +35,5 @@ route.getPage = hash => {
 route.render = () =>
   route.getPage(route.getHash())
     .then(page => {
-      dom.render(page)
+      Dom.render(page)
     })

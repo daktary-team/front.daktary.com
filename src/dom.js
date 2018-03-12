@@ -18,7 +18,7 @@ const Dom = {}
 *
 * @return {Object} node anchor.
 */
-Dom.getAnchor = hash => document.querySelector(`a[name="${hash}"]`)
+Dom.getAnchor = (dom, hash) => dom.querySelector(`a[name="${hash}"]`)
 
 /**
 * Render Github document in html
@@ -28,7 +28,7 @@ Dom.getAnchor = hash => document.querySelector(`a[name="${hash}"]`)
 */
 Dom.render = page => {
   try {
-    dom[Dom._getRenderer(page.type)](page)
+    Dom[Dom._getRenderer(page.type)](page)
   } catch (err) {
     console.warn('err', err)
     const container = document.querySelector('main.container')
@@ -71,6 +71,13 @@ Dom._createBreadcrumb = ({containerTpl, itemTpl, linkTpl}, data) => {
   return containerTpl
 }
 
+/**
+* Render the breadcrumb in fragment.
+*
+* @param {Object} fragment a DOM fragment represents page.
+* @param {Object} data a json breadcrumb data from daktary API.
+* @return {String} name of the method - ex. _renderTree.
+*/
 Dom._prependBreadCrumb = (fragment, data) =>
   fragment.prepend(Dom._createBreadcrumb(tpl.getBreadCrumbTags(), data))
 
@@ -130,7 +137,7 @@ Dom._renderTree = page => {
   const containerTpl = tpl.getTreeTags().containerTpl
   Dom._prependBreadCrumb(containerTpl, page.breadcrumb)
   page.body.forEach(item => {
-    containerTpl.append(dom[Dom._getCreaterTree(item.type)](item))
+    containerTpl.append(Dom[Dom._getCreaterTree(item.type)](item))
     Dom._injectTpl(containerTpl)
   })
 }
@@ -183,7 +190,7 @@ Dom._createTreeRepo = (tplTags, data) =>
 Dom._createFilePage = data => {
   const {containerTpl, contentTpl, githubLinkTpl} = tpl.getFileTags()
   Dom._prependBreadCrumb(containerTpl, data.breadcrumb)
-  githubLinkTpl.href = `https://github.com/${Dom._ghPath()}`
+  githubLinkTpl.href = `https://github.com/${route.getHash()}`
   contentTpl.insertAdjacentHTML('afterbegin', data.body)
   return containerTpl
 }
@@ -198,15 +205,7 @@ Dom._injectTpl = tpl => {
   container.innerHTML = ''
   container.append(document.importNode(tpl, true))
 }
-
-/**
-* get ghPath with route.js
-*
-* @return {Object} node anchor.
-*/
-Dom._ghPath = () =>
-  route.getHash()
-
+  
 try {
   exports.Dom = Dom
 } catch (e) {}
